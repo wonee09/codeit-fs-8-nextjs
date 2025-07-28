@@ -2,12 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import PageContainer from "@/components/common/PageContainer";
+import PageContainer from "@/components/ui/PageContainer";
 import CatDetail from "@/components/ui/CatDetail";
 import Loading from "@/components/ui/Loading";
 import ErrorDisplay from "@/components/ui/ErrorDisplay";
-import { getCatByIdClient } from "@/lib/services/api/catApi";
-import BreedDetailHeader from "./_components/BreedDetailHeader";
+import { getCatByIdClient } from "@/lib/services/catApi";
 
 export default function CSRCatBreedPage() {
   console.log("CSR-CatBreedPage");
@@ -19,10 +18,7 @@ export default function CSRCatBreedPage() {
   useEffect(() => {
     async function loadCat() {
       try {
-        // const cats = await getCatByIdClient(id);
-        const cats = await fetch(`/api/cat-breed-list/${id}`).then((res) =>
-          res.json(),
-        );
+        const cats = await getCatByIdClient(id);
         setCat(cats[0]);
         setLoading(false);
       } catch (err) {
@@ -40,7 +36,6 @@ export default function CSRCatBreedPage() {
 
   return (
     <PageContainer title={cat.breeds[0].name}>
-      <BreedDetailHeader breed={cat.breeds[0]} />
       <CatDetail cat={cat} />
     </PageContainer>
   );
