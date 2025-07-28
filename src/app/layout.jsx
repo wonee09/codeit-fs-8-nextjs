@@ -1,17 +1,14 @@
 import localFont from "next/font/local";
-import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/common/Header";
-import Providers from "@/app/providers";
-
-const notoSansKr = Noto_Sans_KR({
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
+  weight: "100 900",
+});
+const geistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
   weight: "100 900",
 });
 
@@ -20,16 +17,13 @@ export const metadata = {
   description: "다양한 고양이 품종에 대한 정보를 제공하는 웹사이트",
 };
 
-export default async function RootLayout({ children }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="ko">
       <body
-        className={`${notoSansKr.className} ${geistSans.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <Header />
-          {children}
-        </Providers>
+        {children}
       </body>
     </html>
   );

@@ -1,27 +1,45 @@
-import PageContainer from "@/components/common/PageContainer";
-import { getCats } from "@/lib/services/api/catApi";
-import CatCardList from "@/components/ui/CatCardList";
-import Image from "next/image";
-import staticCat from "@/assets/sampleCat.jpg";
-
-export default async function Home() {
-  console.log("Home");
-  const cats = await getCats();
-  return (
-    <PageContainer title="The Cat API">
-      <div className="relative mx-auto w-[300px] h-[300px] flex justify-center items-center mb-4">
-        <Image
-          src={staticCat}
-          alt="The Cat API"
-          fill
-          placeholder="blur"
-          className="object-cover"
-        />
-      </div>
-      <CatCardList items={cats} linkable={false} />
-    </PageContainer>
+async function getCats() {
+  const res = await fetch(
+    `https://api.thecatapi.com/v1/images/search?api_key=${process.env.CAT_API_KEY}&limit=8&has_breeds=1`,
   );
+
+  if (!res.ok) {
+    throw new Error("고양이 데이터를 가져오는데 실패했습니다");
+  }
+
+  return res.json();
 }
 
-// export const revalidate = 5; // 5초 간격의 ISR
-export const dynamic = "force-dynamic";
+export default async function Home() {
+  const cats = await getCats();
+
+  return (
+    <div className="min-h-screen p-8">
+      <h1 className="text-2xl mb-4 text-center text-secondary">The Cat API</h1>
+
+      <main>
+        <div className="grid grid-cols-4 gap-4">
+          {cats.map((cat) => (
+            <div
+              key={cat.id}
+              className="border rounded-lg overflow-hidden shadow-md"
+            >
+              <figure className="h-48">
+                <img
+                  src={cat.url}
+                  alt={cat.breeds[0]?.name || "고양이"}
+                  className="w-full h-full object-cover"
+                />
+              </figure>
+              <div className="p-4">
+                <h2 className="text-center font-medium">
+                  {cat.breeds[0]?.name || "고양이"}
+                </h2>
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+}
