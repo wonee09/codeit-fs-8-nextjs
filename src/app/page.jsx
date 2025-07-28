@@ -1,6 +1,6 @@
 async function getCats() {
   const res = await fetch(
-    `https://api.thecatapi.com/v1/images/search?api_key=${process.env.CAT_API_KEY}&limit=8&has_breeds=1`,
+    `https://api.thecatapi.com/v1/images/search?api_key=${process.env.CAT_API_KEY}&limit=8&has_breeds=1`
   );
 
   if (!res.ok) {
@@ -15,24 +15,26 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen p-8">
-      <h1 className="text-2xl mb-4 text-center text-secondary">The Cat API</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center text-secondary">
+        The Cat API
+      </h1>
 
       <main>
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {cats.map((cat) => (
             <div
               key={cat.id}
               className="border rounded-lg overflow-hidden shadow-md"
             >
-              <figure className="h-48">
+              <figure className="h-64">
                 <img
                   src={cat.url}
                   alt={cat.breeds[0]?.name || "고양이"}
                   className="w-full h-full object-cover"
                 />
               </figure>
-              <div className="p-4">
-                <h2 className="text-center font-medium">
+              <div className="p-4 bg-white">
+                <h2 className="text-xl font-semibold">
                   {cat.breeds[0]?.name || "고양이"}
                 </h2>
               </div>
