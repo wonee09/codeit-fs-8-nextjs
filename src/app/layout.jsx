@@ -1,6 +1,12 @@
 import localFont from "next/font/local";
+import { Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/Header";
+
+const notoSansKr = Noto_Sans_KR({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -16,7 +22,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ko">
-      <body className={`antialiased`}>
+      <body
+        className={`${notoSansKr.className} ${geistSans.variable} antialiased`}
+      >
         <Header />
         {children}
       </body>
