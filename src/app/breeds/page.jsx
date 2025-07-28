@@ -1,6 +1,6 @@
 async function getCatBreeds() {
   const res = await fetch(
-    `https://api.thecatapi.com/v1/breeds?api_key=${process.env.CAT_API_KEY}&limit=8`,
+    `https://api.thecatapi.com/v1/breeds?api_key=${process.env.CAT_API_KEY}&limit=8`
   );
 
   if (!res.ok) {
